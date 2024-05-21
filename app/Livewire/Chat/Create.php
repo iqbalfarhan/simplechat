@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Chat;
 
 use App\Livewire\Forms\ChatForm;
+use App\Models\Chat;
 use App\Models\User;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class Newchat extends Component
+class Create extends Component
 {
     public $show = false;
     public $search;
@@ -22,28 +23,30 @@ class Newchat extends Component
     public function simpan()
     {
         $this->form->from_id = auth()->id();
-        $this->form->store();
-        $this->dispatch('reload');
-        $this->closeModal();
+        $chat = Chat::create($this->form->all());
+
+        $this->redirect(route('chat.show', $chat), true);
     }
 
-    public function setTujuan($id){
-        $this->form->to_id = $id;
+    public function setTujuan(User $user){
+        $this->form->to_id = $user->id;
+        $this->search = $user->email;
     }
 
     public function closeModal()
     {
         $this->form->reset();
         $this->show = false;
+        $this->search = null;
         $this->dispatch('reload');
     }
 
     public function render()
     {
-        return view('livewire.newchat', [
-            'users' => User::when($this->search, function($user){
+        return view('livewire.chat.create', [
+            'users' => $this->search ? User::when($this->search, function($user){
                 $user->where('email', 'like', "%".$this->search."%");
-            })->pluck('email', 'id')->take(5)
+            })->pluck('email', 'id')->take(5) : []
         ]);
     }
 }

@@ -26,7 +26,7 @@ class Chat extends Model
 
     public function getTujuanAttribute(): User
     {
-        if ($this->from_id == 1) {
+        if ($this->from_id == auth()->id()) {
             return User::find($this->to_id);
         }
         else {

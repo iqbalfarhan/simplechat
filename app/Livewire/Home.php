@@ -12,20 +12,6 @@ class Home extends Component
     public $sidebaruserinfo = true;
     public ?Chat $chat;
 
-    #[On("sendMessage")]
-    public function sendMessage($message)
-    {
-        $this->validate([
-            'chat' => 'required'
-        ]);
-
-        Pesan::create([
-            'chat_id' => $this->chat?->id,
-            'user_id' => auth()->id(),
-            'pesan' => $message
-        ]);
-    }
-
     #[On("selectChat")]
     public function selectChat(Chat $chat)
     {
@@ -40,8 +26,6 @@ class Home extends Component
 
     public function render()
     {
-        return view('livewire.home', [
-            'datas' => isset($this->chat) ? Pesan::where('chat_id', $this->chat->id)->get() : []
-        ]);
+        return view('livewire.home');
     }
 }
