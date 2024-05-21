@@ -1,7 +1,7 @@
 <div class="h-full">
     @isset($chat)
         <div class="drawer drawer-open drawer-end h-full">
-            <input type="checkbox" id="userinfo" class="drawer-toggle" wire:model="sidebaruserinfo">
+            <input type="checkbox" id="userinfo" class="drawer-toggle" wire:model.live="sidebaruserinfo">
             <div class="drawer-content p-5">
                 @foreach ($datas as $data)
                     <div @class([
@@ -18,9 +18,13 @@
                     </div>
                 @endforeach
             </div>
-            <div @class(['drawer-side'])>
+            <div class="drawer-side">
                 <label for="userinfo" class="drawer-overlay"></label>
-                <ul class="menu w-80 border-l-2 border-base-300 h-full bg-base-100">
+                <ul @class([
+                    'menu border-l-2 border-base-300 h-full bg-base-100 transition-all',
+                    'w-80' => $sidebaruserinfo,
+                    'w-0 p-0' => !$sidebaruserinfo,
+                ])>
                     <li><a href="">dfasd</a></li>
                 </ul>
             </div>

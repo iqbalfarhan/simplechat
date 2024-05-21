@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class Home extends Component
 {
-    public $sidebaruserinfo = false;
+    public $sidebaruserinfo = true;
     public ?Chat $chat;
 
     #[On("sendMessage")]
