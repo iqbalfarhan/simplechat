@@ -10,6 +10,7 @@
     <div class="navbar-end">
         <button wire:click="$dispatch('createChat')" class="btn btn-ghost btn-circle">
             <x-tabler-plus class="size-6" />
+
         </button>
     </div>
 </div>
